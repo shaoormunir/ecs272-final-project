@@ -14,6 +14,7 @@ for x in os.listdir(os.getcwd() + "/slides"):
             "slides." + slide_name
         )
 
+
 # helper function that returns dict of enumerated slide names
 def slide_dict():
     d = {v: k for k, v in dict(enumerate(slide_order)).items()}
@@ -28,11 +29,9 @@ nav_style = dict(
 
 def nav_button_div(text):
     """helper function to return the navigation buttons easily"""
-    return html.Div(
-        dbc.Button(
-            html.H4(text), style=dict(width="100%"), color="primary", outline=True
-        )
-    )
+
+    FA_icon = html.I(className=text)
+    return html.Div(dbc.Button([FA_icon, ""], className="me-2"))
 
 
 # logo if there is one
@@ -56,22 +55,53 @@ app.layout = html.Div(
         dbc.Container(
             fluid=True,
             children=[
+                # content div
+                dbc.Row(
+                    style=dict(position="sticky", margin="10px"),
+                    children=[
+                        dbc.Col(
+                            width=12,
+                            style=nav_style,
+                            children=[
+                                html.Div(
+                                    id="page-content",
+                                    style=dict(
+                                        textAlign="center",
+                                        margin="auto",
+                                        width="100%",
+                                        height="auto",
+                                    ),
+                                )
+                            ],
+                        )
+                    ],
+                ),
+            ],
+        ),
+        dbc.Container(
+            fluid=True,
+            children=[
                 html.Div(id="current-slide", style=dict(display="none", children="")),
                 # nav div
                 dbc.Row(
-                    style=dict(height="auto", position="sticky", margin="10px"),
+                    style=dict(
+                        position="fixed",
+                        marginBottom="10px",
+                        width="100%",
+                        bottom="0",
+                    ),
                     children=[
-                        # logo
-                        dbc.Col(width=2, style=nav_style, children=[get_logo()]),
                         # previous
                         dbc.Col(
-                            width=4,
-                            style=nav_style,
+                            width=5,
+                            style=dict(textAlign="left"),
                             children=[
                                 dcc.Link(
                                     id="previous-link",
                                     href="",
-                                    children=nav_button_div("<< Previous"),
+                                    children=nav_button_div(
+                                        "fa-solid fa-arrow-left me-2"
+                                    ),
                                 ),
                             ],
                         ),  # end previous
@@ -95,13 +125,15 @@ app.layout = html.Div(
                         ),  # end slide count
                         # next
                         dbc.Col(
-                            width=4,
-                            style=nav_style,
+                            width=5,
+                            style=dict(textAlign="right"),
                             children=[
                                 dcc.Link(
                                     id="next-link",
                                     href="",
-                                    children=nav_button_div("Next >>"),
+                                    children=nav_button_div(
+                                        "fa-solid fa-arrow-right me-2"
+                                    ),
                                 ),
                             ],
                         ),  # end next
@@ -109,10 +141,9 @@ app.layout = html.Div(
                 ),
             ],
         ),
-        # slide content
-        html.Div(id="page-content"),
     ]
 )
+
 
 ###
 # url function
@@ -133,6 +164,7 @@ def change_slide(pathname):
 
 
 ###
+
 
 ###
 # navigation functions
@@ -190,5 +222,5 @@ if __name__ == "__main__":
     app.run_server(
         port=8050,
         host="localhost",
-        debug=False,
+        debug=True,
     )
