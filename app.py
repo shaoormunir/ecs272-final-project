@@ -51,33 +51,6 @@ app.layout = html.Div(
     [
         # URL control
         dcc.Location(id="url", refresh=False),
-        # navigation header
-        dbc.Container(
-            fluid=True,
-            children=[
-                # content div
-                dbc.Row(
-                    style=dict(position="sticky", margin="10px"),
-                    children=[
-                        dbc.Col(
-                            width=12,
-                            style=nav_style,
-                            children=[
-                                html.Div(
-                                    id="page-content",
-                                    style=dict(
-                                        textAlign="center",
-                                        margin="auto",
-                                        width="100%",
-                                        height="auto",
-                                    ),
-                                )
-                            ],
-                        )
-                    ],
-                ),
-            ],
-        ),
         dbc.Container(
             fluid=True,
             children=[
@@ -86,9 +59,9 @@ app.layout = html.Div(
                 dbc.Row(
                     style=dict(
                         position="fixed",
-                        marginBottom="10px",
+                        marginTop="10px",
                         width="100%",
-                        bottom="0",
+                        top="0",
                     ),
                     children=[
                         # previous
@@ -137,6 +110,34 @@ app.layout = html.Div(
                                 ),
                             ],
                         ),  # end next
+                    ],
+                ),
+            ],
+        ),
+        # navigation header
+        dbc.Container(
+            fluid=True,
+            children=[
+                # content div
+                dbc.Row(
+                    style=dict(position="sticky", margin="10px"),
+                    children=[
+                        dbc.Col(
+                            width=12,
+                            style=nav_style,
+                            children=[
+                                html.Div(
+                                    id="page-content",
+                                    style=dict(
+                                        textAlign="center",
+                                        margin="auto",
+                                        marginTop="50px",
+                                        width="100%",
+                                        height="auto",
+                                    ),
+                                )
+                            ],
+                        )
                     ],
                 ),
             ],
