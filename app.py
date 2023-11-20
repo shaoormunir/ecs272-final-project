@@ -6,6 +6,7 @@ import importlib
 from server import app, server
 from presentation import slide_order, prev_text, next_text
 
+
 # add the slides to the object space if they are in the slide order
 for x in os.listdir(os.getcwd() + "/slides"):
     slide_name = x.split(".")[0]

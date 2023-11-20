@@ -6,7 +6,7 @@
 # NOTE - slide filenames MUST BE VALID PYTHON VARIABLE NAMES
 slide_order = [
     "intro",
-    "graph",
+    "mobility",
     "content",
     "picture",
     "last",
