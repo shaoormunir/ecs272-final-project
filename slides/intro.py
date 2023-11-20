@@ -31,7 +31,7 @@ def get_stat_card(title, color, value, height="18vh"):
                         value,
                         className="text-center",
                         style=dict(
-                            fontSize="calc(0.6em + 0.6vw)",
+                            fontSize="calc(0.7em + 0.7vw)",
                             fontWeight="bold",
                             margin="0px",
                             padding="0px",
