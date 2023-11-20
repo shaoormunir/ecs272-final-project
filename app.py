@@ -57,16 +57,16 @@ app.layout = html.Div(
                 html.Div(id="current-slide", style=dict(display="none", children="")),
                 # nav div
                 dbc.Row(
-                    style=dict(
-                        position="fixed",
-                        marginTop="10px",
-                        width="100%",
-                        top="0",
-                    ),
+                    # style=dict(
+                    #     position="fixed",
+                    #     marginTop="10px",
+                    #     width="100%",
+                    #     top="0",
+                    # ),
                     children=[
                         # previous
                         dbc.Col(
-                            width=5,
+                            width=6,
                             style=dict(textAlign="left"),
                             children=[
                                 dcc.Link(
@@ -79,26 +79,26 @@ app.layout = html.Div(
                             ],
                         ),  # end previous
                         # slide count
-                        dbc.Col(
-                            width=2,
-                            style=nav_style,
-                            children=[
-                                dbc.DropdownMenu(
-                                    id="slide-count",
-                                    size="lg",
-                                    children=[
-                                        dbc.DropdownMenuItem(
-                                            s,
-                                            href="/" + s,
-                                        )
-                                        for s in slide_order
-                                    ],
-                                )
-                            ],
-                        ),  # end slide count
+                        # dbc.Col(
+                        #     width=2,
+                        #     style=nav_style,
+                        #     children=[
+                        #         dbc.DropdownMenu(
+                        #             id="slide-count",
+                        #             size="lg",
+                        #             children=[
+                        #                 dbc.DropdownMenuItem(
+                        #                     s,
+                        #                     href="/" + s,
+                        #                 )
+                        #                 for s in slide_order
+                        #             ],
+                        #         )
+                        #     ],
+                        # ),  # end slide count
                         # next
                         dbc.Col(
-                            width=5,
+                            width=6,
                             style=dict(textAlign="right"),
                             children=[
                                 dcc.Link(

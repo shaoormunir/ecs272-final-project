@@ -7,7 +7,6 @@
 slide_order = [
     "intro",
     "graph",
-    # 'template',
     "content",
     "picture",
     "last",
