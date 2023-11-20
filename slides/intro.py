@@ -19,17 +19,19 @@ with open("data/intro/newgeo.json") as response:
 df = pd.read_csv("data/intro/test.csv")
 
 
-def get_stat_card(title, color, value, height="18.67vh"):
+def get_stat_card(title, color, value, height="18vh"):
     return dbc.Card(
         [
-            dbc.CardHeader(title, style=dict(fontWeight="bold", fontSize="1.5em")),
+            dbc.CardHeader(
+                title, style=dict(fontWeight="bold", fontSize="calc(0.4em + 0.4vw)")
+            ),
             dbc.CardBody(
                 [
                     html.H5(
                         value,
                         className="text-center",
                         style=dict(
-                            fontSize="4em",
+                            fontSize="calc(0.5em + 0.5vw)",
                             fontWeight="bold",
                             margin="0px",
                             padding="0px",
@@ -51,17 +53,19 @@ def get_stat_card(title, color, value, height="18.67vh"):
     )
 
 
-def get_region_card(title, color, value, height="18.67vh"):
+def get_region_card(title, color, value, height="18vh"):
     return dbc.Card(
         [
-            dbc.CardHeader(title, style=dict(fontWeight="bold", fontSize="1.5em")),
+            dbc.CardHeader(
+                title, style=dict(fontWeight="bold", fontSize="calc(0.5em + 0.5vw)")
+            ),
             dbc.CardBody(
                 [
                     html.H5(
                         value,
                         className="text-center",
                         style=dict(
-                            fontSize="1.2em",
+                            fontSize="calc(0.5em + 0.5vw)",
                             margin="0px",
                             padding="0px",
                         ),
@@ -190,7 +194,7 @@ content = (
                                         ],
                                     ),
                                     dbc.Col(
-                                        width=10,
+                                        width=9,
                                         style=dict(
                                             height="80vh",
                                         ),
@@ -207,7 +211,7 @@ content = (
                                         ],
                                     ),
                                     dbc.Col(
-                                        width=1,
+                                        width=2,
                                         style=dict(
                                             height="80vh",
                                         ),
@@ -295,7 +299,7 @@ def update_map(start_date, end_date):
                 ],
             ),
             dbc.Col(
-                width=10,
+                width=9,
                 style=dict(
                     height="80vh",
                 ),
@@ -312,7 +316,7 @@ def update_map(start_date, end_date):
                 ],
             ),
             dbc.Col(
-                width=1,
+                width=2,
                 style=dict(
                     height="80vh",
                 ),

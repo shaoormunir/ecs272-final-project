@@ -131,7 +131,7 @@ app.layout = html.Div(
                                     style=dict(
                                         textAlign="center",
                                         margin="auto",
-                                        marginTop="50px",
+                                        marginTop="0px",
                                         width="100%",
                                         height="auto",
                                     ),
