@@ -23,7 +23,7 @@ def get_stat_card(title, color, value, height="18vh"):
     return dbc.Card(
         [
             dbc.CardHeader(
-                title, style=dict(fontWeight="bold", fontSize="calc(0.4em + 0.4vw)")
+                title, style=dict(fontWeight="bold", fontSize="calc(0.5em + 0.5vw)")
             ),
             dbc.CardBody(
                 [
@@ -31,7 +31,7 @@ def get_stat_card(title, color, value, height="18vh"):
                         value,
                         className="text-center",
                         style=dict(
-                            fontSize="calc(0.5em + 0.5vw)",
+                            fontSize="calc(0.6em + 0.6vw)",
                             fontWeight="bold",
                             margin="0px",
                             padding="0px",
@@ -150,7 +150,7 @@ content = (
                             dbc.Row(
                                 children=[
                                     dbc.Col(
-                                        width=1,
+                                        width=2,
                                         style=dict(
                                             height="80vh",
                                         ),
@@ -194,7 +194,7 @@ content = (
                                         ],
                                     ),
                                     dbc.Col(
-                                        width=9,
+                                        width=8,
                                         style=dict(
                                             height="80vh",
                                         ),
@@ -255,7 +255,7 @@ def update_map(start_date, end_date):
     return dbc.Row(
         children=[
             dbc.Col(
-                width=1,
+                width=2,
                 style=dict(
                     height="80vh",
                 ),
@@ -299,7 +299,7 @@ def update_map(start_date, end_date):
                 ],
             ),
             dbc.Col(
-                width=9,
+                width=8,
                 style=dict(
                     height="80vh",
                 ),
