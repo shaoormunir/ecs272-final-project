@@ -7,9 +7,9 @@
 slide_order = [
     "intro",
     "exploration",
+    "government",
     "mobility",
     "content",
-    "picture",
     "last",
 ]
 
