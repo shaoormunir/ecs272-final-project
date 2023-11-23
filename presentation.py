@@ -10,7 +10,7 @@ slide_order = [
     "government",
     "mobility",
     "content",
-    "last",
+    "conclusion",
 ]
 
 # the text that appears in the tab
