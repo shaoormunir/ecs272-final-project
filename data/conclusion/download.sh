@@ -1,5 +1,3 @@
-wget -O geography.csv https://storage.googleapis.com/covid19-open-data/v3/geography.csv
-
 wget -O demographics.csv https://storage.googleapis.com/covid19-open-data/v3/demographics.csv
 
 wget -O epidemiology.csv https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv
