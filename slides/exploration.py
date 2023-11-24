@@ -149,12 +149,6 @@ content = (
     html.Div(
         style=dict(textAlign="center"),
         children=[
-            html.H1(children="Covid-19 Data Exploration"),
-            html.Div(
-                children="""
-                Factors afffecting COVID-19 across the world
-            """
-            ),
             dbc.Container(
                 fluid=True,
                 style=dict(height="80vh"),
@@ -209,7 +203,7 @@ def update_map(factor, ep_factor):
         return dash.no_update
     else:
         button_id = ctx.triggered[0]["prop_id"].split(".")[0]
-        print(button_id)
+        # print(button_id)
         button_id = json.loads(button_id)
         type = button_id["type"]
         id = button_id["index"]
@@ -226,7 +220,7 @@ def update_map(factor, ep_factor):
         factor = list(factors_dict.values())[0]
         ep_factor = list(ep_factors_dict.values())[id]
         global_ep_factor = list(ep_factors_dict.keys())[id]
-    print("Factor: ", factor)
-    print("EP Factor: ", ep_factor)
+    # print("Factor: ", factor)
+    # print("EP Factor: ", ep_factor)
 
     return get_exploration_figure(get_updated_map(df, factor, ep_factor))

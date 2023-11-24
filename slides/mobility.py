@@ -11,7 +11,7 @@ df = pd.read_csv("data/mobility/mob.csv")
 df["year_month"] = df["date"].apply(lambda x: x[:7])
 
 
-'''
+"""
 # Drop date column and Group by year-month and country to calculate the sum of each column
 df = (
     df.drop(columns=["date"])
@@ -39,7 +39,7 @@ df["total_vaccinated"] = df.groupby(["country_name", "year_month"])[
 df["total_active_cases"] = df.groupby(["country_name", "year_month"])[
     "new_confirmed"
 ].transform("sum")
-'''
+"""
 
 df = (
     df.drop(columns=["date"])
@@ -66,23 +66,12 @@ yr_mnth = df["year_month"].unique()
 content = html.Div(
     style=dict(height="76vh", width="100%", textAlign="center"),
     children=[
-                html.Div(
-                [
-                    html.Div(
-                    [
-                        html.H3("Effect of Mobility", style={"color": "white"}),  # Customize text color
-                    ],
-                    style={
-                        "background-color": "#007bff",  # Set background color of the box
-                        "padding": "2px",  # Add padding for better aesthetics
-                        "border-radius": "10px",  # Add rounded corners to the box
-                        "text-align": "center",  # Center-align the text within the box
-                    },
-                ),
-                dcc.Markdown("Mobility represents aggregated monthly averages and Epidemiological factor represents monthly aggregated sums"),
+        html.Div(
+            [
                 dcc.Dropdown(
                     options=[
-                        {"label": i, "value": i} for i in sorted(df["country_name"].unique().tolist())
+                        {"label": i, "value": i}
+                        for i in sorted(df["country_name"].unique().tolist())
                     ],
                     value="United States of America",
                     id="country-dropdown",
@@ -93,7 +82,9 @@ content = html.Div(
                         {"label": "Total Active Cases", "value": "total_active_cases"},
                         {"label": "Total Deaths", "value": "total_deaths"},
                         {"label": "Total Recoveries", "value": "total_recoveries"},
-                        {"label": "Total Fully Vaccinated", "value": "total_vaccinated",
+                        {
+                            "label": "Total Fully Vaccinated",
+                            "value": "total_vaccinated",
                         },
                     ],
                     value="total_active_cases",
@@ -133,13 +124,17 @@ def update_charts(selected_location, selected_epidemiology_data):
     )
     trace3 = go.Bar(
         x=yr_mnth,
-        y=df[df["country_name"] == selected_location]["mobility_transit_stations"].tolist(),
+        y=df[df["country_name"] == selected_location][
+            "mobility_transit_stations"
+        ].tolist(),
         name="Transit Stations Mobility",
         yaxis="y",
     )
     trace4 = go.Bar(
         x=yr_mnth,
-        y=df[df["country_name"] == selected_location]["mobility_grocery_and_pharmacy"].tolist(),
+        y=df[df["country_name"] == selected_location][
+            "mobility_grocery_and_pharmacy"
+        ].tolist(),
         name="Grocery & Pharmacy Mobility",
         yaxis="y",
     )
@@ -166,7 +161,9 @@ def update_charts(selected_location, selected_epidemiology_data):
 
     line_trace = go.Scatter(
         x=yr_mnth,
-        y=df[df["country_name"] == selected_location][selected_epidemiology_data].tolist(),
+        y=df[df["country_name"] == selected_location][
+            selected_epidemiology_data
+        ].tolist(),
         mode="lines",
         name=label,
         line=dict(color="black"),
@@ -177,15 +174,21 @@ def update_charts(selected_location, selected_epidemiology_data):
 
     layout = go.Layout(
         barmode="group",  # Change to "group" for grouped bar chart
-        xaxis=dict(title="Month-Year", tickvals=yr_mnth, tickformat="%b %Y",),
+        xaxis=dict(
+            title="Month-Year",
+            tickvals=yr_mnth,
+            tickformat="%b %Y",
+        ),
         yaxis=dict(title="Mobility Counts", showgrid=True),
-        yaxis2=dict(title="Epidemiological Counts", overlaying="y", side="right", showgrid=True),
+        yaxis2=dict(
+            title="Epidemiological Counts", overlaying="y", side="right", showgrid=True
+        ),
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     )
 
-    fig = go.Figure(data=data_bar+data_line, layout=layout)
+    fig = go.Figure(data=data_bar + data_line, layout=layout)
 
-    '''
+    """
     # find maximum sum of 5 mobility columns for the selected country and set it as the upper limit of y-axis
     ymin_left = min(
                     min(df[df["country_name"] == selected_location]["mobility_residential"].tolist()),
@@ -209,5 +212,5 @@ def update_charts(selected_location, selected_epidemiology_data):
         yaxis_range=[ymin_left, ymax_left],  # Adjust the range as needed
         yaxis2_range=[ymin_right, ymax_right],  # Adjust the range as needed
     )
-    '''
+    """
     return fig

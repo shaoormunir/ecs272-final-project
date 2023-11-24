@@ -273,10 +273,10 @@ def get_date_based_values(df, start_date, end_date, subregion=False):
     if total_active < 0:
         total_active = 0
 
-    print("Total Active Cases: ", total_active)
-    print("Total Deaths: ", total_deaths)
-    print("Total Recovered: ", total_recovered)
-    print("Total Vaccinated: ", total_vaccinated)
+    # print("Total Active Cases: ", total_active)
+    # print("Total Deaths: ", total_deaths)
+    # print("Total Recovered: ", total_recovered)
+    # print("Total Vaccinated: ", total_vaccinated)
     return (
         fig,
         total_active,
@@ -304,12 +304,6 @@ content = (
     html.Div(
         style=dict(textAlign="center"),
         children=[
-            html.H1(children="Overview: Covid-19 Dashboard"),
-            html.Div(
-                children="""
-                Covid-19 Distribution of Cases Worldwide
-            """
-            ),
             dbc.Container(
                 fluid=True,
                 style=dict(height="80vh"),
@@ -378,8 +372,8 @@ def update_map(start_date, end_date):
     global_start_date = start_date
     global_end_date = end_date
 
-    print("Start Date: ", start_date)
-    print("End Date: ", end_date)
+    # print("Start Date: ", start_date)
+    # print("End Date: ", end_date)
 
     # Call the function to get the updated figure based on the selected date range
     (
@@ -407,7 +401,7 @@ def update_map(start_date, end_date):
     prevent_initial_call=True,
 )
 def display_click_data(clickData):
-    print("Click Data: ", clickData)
+    # print("Click Data: ", clickData)
     if clickData is None:
         (
             updated_fig,
@@ -426,7 +420,7 @@ def display_click_data(clickData):
             top_10_countries,
         )
     country = clickData["points"][0]["location"]
-    print("Country: ", country)
+    # print("Country: ", country)
 
     df_temp = df[df.iso_3166_1_alpha_3 == country]
 
@@ -470,7 +464,7 @@ def display_click_data(clickData):
 def reset_map(n_clicks):
     if n_clicks is None:
         return dash.no_update
-    print("Resetting Map")
+    # print("Resetting Map")
     (
         updated_fig,
         total_active,

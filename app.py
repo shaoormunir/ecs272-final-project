@@ -4,7 +4,13 @@ import os
 import importlib
 
 from server import app, server
-from presentation import slide_order, prev_text, next_text
+from presentation import (
+    slide_order,
+    slide_titles,
+    slide_subtitles,
+    prev_text,
+    next_text,
+)
 
 
 # add the slides to the object space if they are in the slide order
@@ -19,6 +25,18 @@ for x in os.listdir(os.getcwd() + "/slides"):
 # helper function that returns dict of enumerated slide names
 def slide_dict():
     d = {v: k for k, v in dict(enumerate(slide_order)).items()}
+    d["/"] = 0
+    return d
+
+
+def slide_title_dict():
+    d = {v: k for k, v in dict(enumerate(slide_titles)).items()}
+    d["/"] = 0
+    return d
+
+
+def slide_subtitle_dict():
+    d = {v: k for k, v in dict(enumerate(slide_subtitles)).items()}
     d["/"] = 0
     return d
 
@@ -58,6 +76,7 @@ app.layout = html.Div(
                 html.Div(id="current-slide", style=dict(display="none", children="")),
                 # nav div
                 dbc.Row(
+                    justify="center",
                     # style=dict(
                     #     position="fixed",
                     #     marginTop="10px",
@@ -67,7 +86,7 @@ app.layout = html.Div(
                     children=[
                         # previous
                         dbc.Col(
-                            width=6,
+                            width=2,
                             style=dict(textAlign="left"),
                             children=[
                                 dcc.Link(
@@ -99,7 +118,12 @@ app.layout = html.Div(
                         # ),  # end slide count
                         # next
                         dbc.Col(
-                            width=6,
+                            width=8,
+                            id="slide-information",
+                            children=[],
+                        ),
+                        dbc.Col(
+                            width=2,
                             style=dict(textAlign="right"),
                             children=[
                                 dcc.Link(
@@ -212,12 +236,41 @@ def set_slide_state(pathname):
         return pathname.split("/")[1].strip()
 
 
-@app.callback(Output("slide-count", "label"), [Input("current-slide", "children")])
-def update_slide_count(current_slide):
-    """shows the current slide number out of the total"""
-    total = len(slide_order)
-    current = slide_dict()[current_slide] + 1
-    return "{}/{}".format(current, total)
+@app.callback(
+    Output("slide-information", "children"), [Input("current-slide", "children")]
+)
+def update_information(current_slide):
+    """
+    updates the slide information (title and subtitle)
+    """
+    current_order = slide_dict()[current_slide]
+    title = slide_titles[current_order]
+    subtitle = slide_subtitles[current_order]
+    return (
+        html.Div(
+            [
+                html.Div(
+                    [
+                        html.H3(
+                            title,
+                            style={"color": "white"},
+                        ),  # Customize text color
+                    ],
+                    style={
+                        "background-color": "#007bff",  # Set background color of the box
+                        "padding": "2px",  # Add padding for better aesthetics
+                        "border-radius": "10px",  # Add rounded corners to the box
+                        "text-align": "center",  # Center-align the text within the box
+                    },
+                ),
+                dcc.Markdown(
+                    "\n" + subtitle,
+                    # center the text
+                    style=dict(textAlign="center"),
+                ),
+            ]
+        ),
+    )
 
 
 if __name__ == "__main__":
