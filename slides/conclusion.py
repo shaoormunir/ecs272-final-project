@@ -77,7 +77,11 @@ content = html.Div(
                     inline=True,
                     style=dict(height="9vh", overflow="scroll"),
                 ),
-                dcc.Graph(id="graph", style=dict(height="74vh", overflow="scroll")),
+                dcc.Graph(
+                    id="graph",
+                    style=dict(height="74vh", overflow="scroll"),
+                    config={"displayModeBar": False},
+                ),
             ],
             style=dict(textAlign="center", height="76vh"),
             id="dd-output-container",

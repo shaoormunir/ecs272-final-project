@@ -50,10 +50,10 @@ def get_exploration_figure(
     return dbc.Row(
         children=[
             dbc.Row(
-                justify="center",
+                justify="right",
                 children=[
                     dbc.Col(
-                        width=2,
+                        width=6,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_factor,
@@ -70,7 +70,7 @@ def get_exploration_figure(
                         ],
                     ),
                     dbc.Col(
-                        width=2,
+                        width=6,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_ep_factor,
@@ -166,26 +166,6 @@ content = (
         ],
     ),
 )
-
-
-# # callback for date picker range
-# @app.callback(
-#     Output("exploration-data-portion", "children", allow_duplicate=True),
-#     [
-#         Input("exploration-dropdown-factor", "factor"),
-#         Input("exploration-dropdown-ep-factor", "ep_factor"),
-#         # Input("world-map", "clickData"),
-#     ],
-#     prevent_initial_call=True,
-# )
-# def update_map(factor, ep_factor):
-#     print("Factor: ", factor)
-#     print("EP Factor: ", ep_factor)
-#     # if factor is None or ep_factor is None:
-#     #     return dash.no_update
-#     # print("Updating Map")
-#     # fig = get_updated_map(df, factor, ep_factor)
-#     # return get_exploration_figure(fig)
 
 
 # callback for the two dropdowns with id's exploration-dropdown-factor and exploration-dropdown-ep-factor

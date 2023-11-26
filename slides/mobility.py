@@ -96,7 +96,11 @@ content = html.Div(
         ),
         html.Div(
             [
-                dcc.Graph(id="mobility-graph", style=dict(height="75vh")),
+                dcc.Graph(
+                    id="mobility-graph",
+                    style=dict(height="75vh"),
+                    config={"displayModeBar": False},
+                ),
             ],
             style=dict(textAlign="center", width="100%"),
             id="dd-output-container",

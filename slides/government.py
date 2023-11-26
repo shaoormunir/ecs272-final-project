@@ -62,7 +62,9 @@ content = html.Div(
         html.Div(
             [
                 dcc.Graph(
-                    id="government-graph", style=dict(height="76vh", overflow="scroll")
+                    id="government-graph",
+                    style=dict(height="76vh", overflow="scroll"),
+                    config={"displayModeBar": False},
                 ),
             ],
             style=dict(textAlign="center", height="76vh"),

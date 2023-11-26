@@ -32,8 +32,4 @@ slide_subtitles = [
 ]
 
 # the text that appears in the tab
-presentation_title = "Dash Slides"
-
-# the text that appears in the previous and next buttons
-prev_text = "<< Previous"
-next_text = "Next >>"
+presentation_title = "COVID 19 Dashboard"

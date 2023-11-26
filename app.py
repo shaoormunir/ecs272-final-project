@@ -8,8 +8,6 @@ from presentation import (
     slide_order,
     slide_titles,
     slide_subtitles,
-    prev_text,
-    next_text,
 )
 
 

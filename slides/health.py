@@ -70,12 +70,12 @@ def get_updated_figure():
         hover_name="country_name",
         size=health_factors[global_health_factor],
         trendline="ols",
-        title="Comparison of Health Factors across Countries",
+        title="",
     )
     fig.update_layout(
         xaxis_title="",
         yaxis_title=global_epidemiological_factor,
-        font=dict(size=18),
+        font=dict(size=12),
         # hide legend
         # xaxis_type="category",
     )
@@ -87,7 +87,7 @@ def get_updated_figure():
                 justify="center",
                 children=[
                     dbc.Col(
-                        width=2,
+                        width=6,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_epidemiological_factor,
@@ -110,7 +110,7 @@ def get_updated_figure():
                         ],
                     ),
                     dbc.Col(
-                        width=2,
+                        width=6,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_health_factor,
