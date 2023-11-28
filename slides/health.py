@@ -28,24 +28,16 @@ epidemiological_factors = {
 }
 
 global_selected_countries = [
-    "Afghanistan",
     "Australia",
     "Brazil",
     "Canada",
-    "Egypt",
     "Germany",
     "India",
     "Japan",
-    "Luxembourg",
     "Russia",
-    "Singapore",
-    "South Africa",
     "South Korea",
     "Spain",
-    "Sri Lanka",
     "Turkey",
-    "Ukraine",
-    "United Arab Emirates",
     "United Kingdom",
     "United States of America",
 ]
@@ -70,7 +62,6 @@ def get_updated_figure():
         hover_name="country_name",
         size=health_factors[global_health_factor],
         trendline="ols",
-        title="",
     )
     fig.update_layout(
         xaxis_title="",
@@ -94,6 +85,7 @@ def get_updated_figure():
                                 color="warning",
                                 size="lg",
                                 id="health-dropdown-ep",
+                                style=dict(paddingTop="0.5rem"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         ep_factor,
@@ -117,6 +109,7 @@ def get_updated_figure():
                                 color="success",
                                 size="lg",
                                 id="health-dropdown-health",
+                                style=dict(paddingTop="0.5rem"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         health_factors,
@@ -166,7 +159,7 @@ content = html.Div(
                                     "display": "inline",
                                     "font-size": 15,
                                     "padding-right": "0.2rem",
-                                    "padding-right": "0.7rem",
+                                    "padding-left": "0.7rem",
                                 },
                             ),
                             "value": country,
@@ -174,24 +167,16 @@ content = html.Div(
                         for country in countries
                     ],
                     value=[
-                        "Afghanistan",
                         "Australia",
                         "Brazil",
                         "Canada",
-                        "Egypt",
                         "Germany",
                         "India",
                         "Japan",
-                        "Luxembourg",
                         "Russia",
-                        "Singapore",
-                        "South Africa",
                         "South Korea",
                         "Spain",
-                        "Sri Lanka",
                         "Turkey",
-                        "Ukraine",
-                        "United Arab Emirates",
                         "United Kingdom",
                         "United States of America",
                     ],
