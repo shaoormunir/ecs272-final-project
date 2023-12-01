@@ -25,7 +25,7 @@ slide_titles = [
 slide_subtitles = [
     "Covid-19 Distribution of Cases Worldwide",
     "Factors afffecting COVID-19 across the world",
-    "Governmental response of no restriction or recommendation of a policy is considered as no restriction. Partial or full restrictions are considered as restrictions.",
+    "Governmental response/recommendation of no restriction ~ no restriction. Partial/full restrictions ~ restrictions.",
     "Mobility represents aggregated monthly averages and Epidemiological factor represents monthly aggregated sums",
     "Scroll & Select Countries to Perform Comparison",
     "Scroll & Select Countries to Perform 0-1 Scaled Factor Comparison",

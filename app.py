@@ -1,5 +1,6 @@
 from dash import html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
+import pandas as pd
 import os
 import importlib
 
@@ -62,6 +63,9 @@ def get_logo():
         height="40px",
         src="https://github.com/russellromney/dash-slides/assets/raw/logo.png",
     )
+
+# Read Country Data
+country_data = pd.read_csv("/Users/yvekaria/Documents/PhD Course Work/ECS 272 Information Visualization/Project/ecs272-final-project/data/intro/index.csv")
 
 
 app.layout = html.Div(
@@ -133,6 +137,30 @@ app.layout = html.Div(
                                 ),
                             ],
                         ),  # end next
+                    ],
+                ),
+                dbc.Row(
+                    justify="center",
+                    # style=dict(
+                    #     position="fixed",
+                    #     marginTop="10px",
+                    #     width="100%",
+                    #     top="0",
+                    # ),
+                    children=[
+                        html.Div(
+                            [
+                                dcc.Dropdown(
+                                    options=[
+                                        {"label": i, "value": i}
+                                        for i in sorted(country_data["country_name"].unique().tolist())
+                                    ],
+                                    value="United States of America",
+                                    id="global-dropdown",
+                                ),
+                            ],
+                            style=dict(textAlign="center", width="40%", display="inline-block"),
+                        ),
                     ],
                 ),
             ],
