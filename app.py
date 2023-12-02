@@ -72,6 +72,7 @@ app.layout = html.Div(
     [
         # URL control
         dcc.Location(id="url", refresh=False),
+        dcc.Store(id="selected-country-store", storage_type="session"),
         dbc.Container(
             fluid=True,
             children=[
@@ -214,6 +215,19 @@ def change_slide(pathname):
         except:
             return "404"
 
+
+###
+
+
+
+###
+# Update Country and store the selection to the global state
+@app.callback(
+    Output("selected-country-store", "data"),
+    Input("global-dropdown", "value")
+)
+def update_selected_country(selected_country):
+    return selected_country
 
 ###
 

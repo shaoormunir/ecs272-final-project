@@ -48,14 +48,14 @@ content = html.Div(
     children=[
         html.Div(
             [
-                dcc.Dropdown(
-                    options=[
-                        {"label": i, "value": i}
-                        for i in sorted(df["country_name"].unique().tolist())
-                    ],
-                    value="United States of America",
-                    id="country-dropdown",
-                ),
+                # dcc.Dropdown(
+                #     options=[
+                #         {"label": i, "value": i}
+                #         for i in sorted(df["country_name"].unique().tolist())
+                #     ],
+                #     value="United States of America",
+                #     id="country-dropdown",
+                # ),
             ],
             style=dict(textAlign="center", width="40%", display="inline-block"),
         ),
@@ -76,7 +76,8 @@ content = html.Div(
 
 @app.callback(
     Output("government-graph", "figure"),
-    [Input("country-dropdown", "value")],
+    [Input("selected-country-store", "data")],
+    # [Input("country-dropdown", "value")],
 )
 def update_charts(selected_location):
     selected_df = df[df["country_name"] == selected_location]

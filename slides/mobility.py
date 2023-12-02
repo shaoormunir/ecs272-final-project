@@ -68,15 +68,15 @@ content = html.Div(
     children=[
         html.Div(
             [
-                dcc.Dropdown(
-                    options=[
-                        {"label": i, "value": i}
-                        for i in sorted(df["country_name"].unique().tolist())
-                    ],
-                    value="United States of America",
-                    id="country-dropdown",
-                    style=dict(display="inline-block", width="50%"),
-                ),
+                # dcc.Dropdown(
+                #     options=[
+                #         {"label": i, "value": i}
+                #         for i in sorted(df["country_name"].unique().tolist())
+                #     ],
+                #     value="United States of America",
+                #     id="country-dropdown",
+                #     style=dict(display="inline-block", width="50%"),
+                # ),
                 dcc.Dropdown(
                     options=[
                         {"label": "Total Active Cases", "value": "total_active_cases"},
@@ -111,7 +111,8 @@ content = html.Div(
 
 @app.callback(
     Output("mobility-graph", "figure"),
-    [Input("country-dropdown", "value"), Input("epidemiology-dropdown", "value")],
+    [Input("selected-country-store", "data"), Input("epidemiology-dropdown", "value")],
+    # [Input("country-dropdown", "value"), Input("epidemiology-dropdown", "value")],
 )
 def update_charts(selected_location, selected_epidemiology_data):
     trace1 = go.Bar(
