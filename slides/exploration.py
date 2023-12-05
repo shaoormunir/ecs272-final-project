@@ -116,7 +116,8 @@ def get_exploration_figure(
 
 def get_updated_map(df, factor, ep_factor):
     df_temp = df[["iso_3166_1_alpha_3", "country_name", factor, ep_factor]]
-    df_temp["ratio"] = df_temp[factor] / df_temp[ep_factor]
+
+    df_temp.loc[:, "ratio"] = df_temp[factor] / df_temp[ep_factor]
 
     fig = px.choropleth_mapbox(
         df_temp,

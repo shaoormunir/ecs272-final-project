@@ -64,8 +64,9 @@ def get_logo():
         src="https://github.com/russellromney/dash-slides/assets/raw/logo.png",
     )
 
+
 # Read Country Data
-country_data = pd.read_csv("/Users/yvekaria/Documents/PhD Course Work/ECS 272 Information Visualization/Project/ecs272-final-project/data/intro/index.csv")
+country_data = pd.read_csv("data/intro/index.csv")
 
 
 app.layout = html.Div(
@@ -154,13 +155,19 @@ app.layout = html.Div(
                                 dcc.Dropdown(
                                     options=[
                                         {"label": i, "value": i}
-                                        for i in sorted(country_data["country_name"].unique().tolist())
+                                        for i in sorted(
+                                            country_data["country_name"]
+                                            .unique()
+                                            .tolist()
+                                        )
                                     ],
                                     value="United States of America",
                                     id="global-dropdown",
                                 ),
                             ],
-                            style=dict(textAlign="center", width="40%", display="inline-block"),
+                            style=dict(
+                                textAlign="center", width="40%", display="inline-block"
+                            ),
                         ),
                     ],
                 ),
@@ -219,15 +226,14 @@ def change_slide(pathname):
 ###
 
 
-
 ###
 # Update Country and store the selection to the global state
 @app.callback(
-    Output("selected-country-store", "data"),
-    Input("global-dropdown", "value")
+    Output("selected-country-store", "data"), Input("global-dropdown", "value")
 )
 def update_selected_country(selected_country):
     return selected_country
+
 
 ###
 
