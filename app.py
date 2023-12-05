@@ -11,6 +11,8 @@ from presentation import (
     slide_subtitles,
 )
 
+glob_selected_country = None
+
 
 # add the slides to the object space if they are in the slide order
 for x in os.listdir(os.getcwd() + "/slides"):

@@ -14,6 +14,8 @@ import plotly.express as px
 import dash_dangerously_set_inner_html
 import dash
 
+glob_selected_country = None
+
 with open("data/exploration/newgeo.json") as response:
     countries = json.load(response)
 
@@ -114,10 +116,20 @@ def get_exploration_figure(
     )
 
 
-def get_updated_map(df, factor, ep_factor):
+def get_updated_map(df, factor, ep_factor, selected_country):
     df_temp = df[["iso_3166_1_alpha_3", "country_name", factor, ep_factor]]
 
     df_temp.loc[:, "ratio"] = df_temp[factor] / df_temp[ep_factor]
+
+    # print("Selected Country: ", glob_selected_country)
+    print(df_temp.country_name.unique())
+
+    global_country_ratio = df_temp[df_temp["country_name"] == selected_country][
+        "ratio"
+    ].values[0]
+
+    # update ratio of other countries in reference to the selected country
+    df_temp.loc[:, "ratio"] = df_temp["ratio"] / global_country_ratio
 
     fig = px.choropleth_mapbox(
         df_temp,
@@ -144,7 +156,7 @@ def get_updated_map(df, factor, ep_factor):
     return fig
 
 
-fig = get_updated_map(df, "hospital_beds_per_1000", "confirmed_per_1000")
+# fig = get_updated_map(df, "hospital_beds_per_1000", "confirmed_per_1000")
 
 content = (
     html.Div(
@@ -156,11 +168,7 @@ content = (
                 children=[
                     html.Div(
                         id="exploration-data-portion",
-                        children=[
-                            get_exploration_figure(
-                                fig,
-                            )
-                        ],
+                        children=[],
                     ),
                 ],
             ),
@@ -169,39 +177,73 @@ content = (
 )
 
 
+# @app.callback(
+#     Output("exploration-data-portion", "children", allow_duplicate=True),
+#     [Input("selected-country-store", "data")],
+#     prevent_initial_call="initial_duplicate",
+# )
+# def update_map(selected_location):
+#     global glob_selected_country
+#     glob_selected_country = selected_location
+#     return get_updated_map(
+#         df,
+#         factors_dict[global_factor],
+#         ep_factors_dict[global_ep_factor],
+#         selected_location,
+#     )
+
+
 # callback for the two dropdowns with id's exploration-dropdown-factor and exploration-dropdown-ep-factor
 @app.callback(
     Output("exploration-data-portion", "children"),
     [
         Input({"type": "factor", "index": dash.dependencies.ALL}, "n_clicks"),
         Input({"type": "ep_factor", "index": dash.dependencies.ALL}, "n_clicks"),
+        Input("selected-country-store", "data"),
     ],
-    prevent_initial_call=True,
 )
-def update_map(factor, ep_factor):
+def update_map(factor, ep_factor, selected_location):
     ctx = dash.callback_context
-    if not ctx.triggered:
-        return dash.no_update
-    else:
-        button_id = ctx.triggered[0]["prop_id"].split(".")[0]
-        # print(button_id)
-        button_id = json.loads(button_id)
-        type = button_id["type"]
-        id = button_id["index"]
-
-    # update the global variables
     global global_factor
     global global_ep_factor
+
+    print("Factor: ", factor)
+    print("EP Factor: ", ep_factor)
+    print("Selected Location: ", selected_location)
+    if not ctx.triggered:
+        # return dash.no_update
+        return get_exploration_figure(
+            get_updated_map(
+                df,
+                factors_dict[global_factor],
+                ep_factors_dict[global_ep_factor],
+                selected_location,
+            )
+        )
+    else:
+        try:
+            button_id = ctx.triggered[0]["prop_id"].split(".")[0]
+            # print(button_id)
+            button_id = json.loads(button_id)
+            type = button_id["type"]
+            id = button_id["index"]
+        except:
+            type = "skip"
+            ep_factor = ep_factors_dict[global_ep_factor]
+            factor = factors_dict[global_factor]
+    # update the global variables
     if type == "factor":
         factor = list(factors_dict.values())[id]
         ep_factor = list(ep_factors_dict.values())[0]
         global_factor = list(factors_dict.keys())[id]
 
-    else:
+    elif type == "ep_factor":
         factor = list(factors_dict.values())[0]
         ep_factor = list(ep_factors_dict.values())[id]
         global_ep_factor = list(ep_factors_dict.keys())[id]
     # print("Factor: ", factor)
     # print("EP Factor: ", ep_factor)
 
-    return get_exploration_figure(get_updated_map(df, factor, ep_factor))
+    return get_exploration_figure(
+        get_updated_map(df, factor, ep_factor, selected_location)
+    )
