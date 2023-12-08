@@ -59,9 +59,10 @@ def get_exploration_figure(
                         children=[
                             dbc.DropdownMenu(
                                 label=global_factor,
-                                color="warning",
-                                size="lg",
+                                color="white",
+                                # size="lg",
                                 id="exploration-dropdown-factor",
+                                style=dict(border="1px dotted #6c757d"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         factor, id={"type": "factor", "index": i}
@@ -76,9 +77,10 @@ def get_exploration_figure(
                         children=[
                             dbc.DropdownMenu(
                                 label=global_ep_factor,
-                                color="success",
-                                size="lg",
+                                color="white",
+                                # size="lg",
                                 id="exploration-dropdown-ep-factor",
+                                style=dict(border="1px dotted #6c757d"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         ep_factor,
@@ -122,7 +124,7 @@ def get_updated_map(df, factor, ep_factor, selected_country):
     df_temp.loc[:, "ratio"] = df_temp[factor] / df_temp[ep_factor]
 
     # print("Selected Country: ", glob_selected_country)
-    print(df_temp.country_name.unique())
+    # print(df_temp.country_name.unique())
 
     global_country_ratio = df_temp[df_temp["country_name"] == selected_country][
         "ratio"
