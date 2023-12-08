@@ -51,7 +51,11 @@ def nav_button_div(text):
     """helper function to return the navigation buttons easily"""
 
     FA_icon = html.I(className=text)
-    return html.Div(dbc.Button([FA_icon, ""], className="me-2"))
+    return html.Div(
+        dbc.Button(
+            [FA_icon, ""], className="me-2", style=(dict(backgroundColor="#8e9295"))
+        )
+    )
 
 
 # logo if there is one
@@ -305,7 +309,7 @@ def update_information(current_slide):
                         ),  # Customize text color
                     ],
                     style={
-                        "background-color": "#007bff",  # Set background color of the box
+                        "background-color": "#8e9295",  # Set background color of the box
                         "padding": "2px",  # Add padding for better aesthetics
                         "border-radius": "10px",  # Add rounded corners to the box
                         "text-align": "center",  # Center-align the text within the box

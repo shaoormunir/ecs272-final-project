@@ -27,35 +27,49 @@ epidemiological_factors = {
     "Recovered per 1000": "total_recoveries_per_1000",
 }
 
-global_selected_countries = [
-    "Australia",
-    "Brazil",
-    "Canada",
-    "Germany",
-    "India",
-    "Japan",
-    "Russia",
-    "South Korea",
-    "Spain",
-    "Turkey",
-    "United Kingdom",
-    "United States of America",
-]
 global_epidemiological_factor = "Cases per 1000"
 global_health_factor = "Physicians per 1000"
+
+global_selected_country = None
 
 
 def get_updated_figure():
     global df
-    global global_selected_countries
+    global global_selected_country
     global global_epidemiological_factor
     global global_health_factor
-    df_temp = df[df["country_name"].isin(global_selected_countries)]
+
+    print("global_selected_country", global_selected_country)
+    print("global_epidemiological_factor", global_epidemiological_factor)
+    print("global_health_factor", global_health_factor)
+
+    df_selected_country = df[df["country_name"] == global_selected_country]
+
+    df_top_10 = df.sort_values(
+        by=health_factors[global_health_factor], ascending=False
+    ).head(10)
+
+    print(df_top_10.country_name.unique().tolist())
+    # select bottom 10 whose health factor is not null or 0
+    df_bottom_10 = (
+        df[
+            (df[health_factors[global_health_factor]] != 0)
+            & (df[health_factors[global_health_factor]].notnull())
+        ]
+        .sort_values(by=health_factors[global_health_factor], ascending=True)
+        .head(10)
+    )
+
+    print(df_bottom_10.country_name.unique().tolist())
+
+    df_combined = pd.concat([df_top_10, df_bottom_10, df_selected_country])
+
+    print(df_combined.country_name.unique().tolist())
 
     # print(global_epidemiological_factor)
     # print(epidemiological_factors[global_epidemiological_factor])
     fig = px.scatter(
-        df_temp,
+        df_combined,
         x="country_name",
         y=epidemiological_factors[global_epidemiological_factor],
         color="country_name",
@@ -82,10 +96,11 @@ def get_updated_figure():
                         children=[
                             dbc.DropdownMenu(
                                 label=global_epidemiological_factor,
-                                color="warning",
-                                size="lg",
+                                color="white",
+                                # size="lg",
                                 id="health-dropdown-ep",
-                                style=dict(paddingTop="0.5rem"),
+                                # add a grey border to dropdown
+                                style=dict(border="1px dotted #6c757d"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         ep_factor,
@@ -106,10 +121,10 @@ def get_updated_figure():
                         children=[
                             dbc.DropdownMenu(
                                 label=global_health_factor,
-                                color="success",
-                                size="lg",
+                                color="white",
+                                # size="lg",
                                 id="health-dropdown-health",
-                                style=dict(paddingTop="0.5rem"),
+                                style=dict(border="1px dotted #6c757d"),
                                 children=[
                                     dbc.DropdownMenuItem(
                                         health_factors,
@@ -149,49 +164,13 @@ content = html.Div(
     children=[
         html.Div(
             [
-                dcc.Checklist(
-                    id="countries-health",
-                    options=[
-                        {
-                            "label": html.Div(
-                                country,
-                                style={
-                                    "display": "inline",
-                                    "font-size": 15,
-                                    "padding-right": "0.2rem",
-                                    "padding-left": "0.7rem",
-                                },
-                            ),
-                            "value": country,
-                        }
-                        for country in countries
-                    ],
-                    value=[
-                        "Australia",
-                        "Brazil",
-                        "Canada",
-                        "Germany",
-                        "India",
-                        "Japan",
-                        "Russia",
-                        "South Korea",
-                        "Spain",
-                        "Turkey",
-                        "United Kingdom",
-                        "United States of America",
-                    ],
-                    inline=True,
-                    style=dict(height="9vh", overflow="scroll"),
-                ),
                 dbc.Container(
                     fluid=True,
                     style=dict(height="80vh"),
                     children=[
                         html.Div(
                             id="health-data-portion",
-                            children=[
-                                get_updated_figure(),
-                            ],
+                            children=[],
                         ),
                     ],
                 ),
@@ -203,41 +182,46 @@ content = html.Div(
 )
 
 
-@app.callback(
-    Output("health-data-portion", "children", allow_duplicate=True),
-    [Input("countries-health", "value")],
-    prevent_initial_call=True,
-)
-def update_map(countries):
-    global global_selected_countries
-    global_selected_countries = countries
-    return get_updated_figure()
+# @app.callback(
+#     Output("health-data-portion", "children", allow_duplicate=True),
+#     [Input("countries-health", "value")],
+#     prevent_initial_call=True,
+# )
+# def update_map(countries):
+#     global global_selected_countries
+#     global_selected_countries = countries
+#     return get_updated_figure()
 
 
 @app.callback(
-    Output("health-data-portion", "children", allow_duplicate=True),
+    Output("health-data-portion", "children"),
     [
         Input({"type": "ep_factor", "index": dash.dependencies.ALL}, "n_clicks"),
         Input({"type": "health_factor", "index": dash.dependencies.ALL}, "n_clicks"),
+        Input("selected-country-store", "data"),
     ],
-    prevent_initial_call=True,
 )
-def update_map(ep_factor, health_factor):
+def update_map(ep_factor, health_factor, selected_location):
     ctx = dash.callback_context
     global global_epidemiological_factor
     global global_health_factor
+    global global_selected_country
 
     # print("EP Factor: ", ep_factor)
     # print("Health Factor: ", health_factor)
 
     if not ctx.triggered:
-        return dash.no_update
+        global_selected_country = selected_location
+        return get_updated_figure()
     else:
-        button_id = ctx.triggered[0]["prop_id"].split(".")[0]
-        button_id = json.loads(button_id)
+        try:
+            button_id = ctx.triggered[0]["prop_id"].split(".")[0]
+            button_id = json.loads(button_id)
 
-        type = button_id["type"]
-        id = button_id["index"]
+            type = button_id["type"]
+            id = button_id["index"]
+        except:
+            type = "skip"
 
     if type == "ep_factor":
         global_epidemiological_factor = list(epidemiological_factors.keys())[id]

@@ -101,16 +101,16 @@ def get_main_figure(
                         "Reset View",
                         id="reset-map",
                         className="mb-3",
-                        color="warning",
                         style=dict(
                             width="100%",
                             height="5vh",
                             fontSize="calc(0.5em + 0.5vw)",
+                            backgroundColor="#8e9295",
                         ),
                     ),
                     get_region_card(
                         "Regional Statistics",
-                        "rgb(159 163 166)",
+                        "#8e9295",
                         top_10_countries,
                         "73vh",
                     ),

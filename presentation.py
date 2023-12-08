@@ -27,7 +27,7 @@ slide_subtitles = [
     "Factors afffecting COVID-19 across the world",
     "Governmental response/recommendation of no restriction ~ no restriction. Partial/full restrictions ~ restrictions.",
     "Mobility represents aggregated monthly averages and Epidemiological factor represents monthly aggregated sums",
-    "Scroll & Select Countries to Perform Comparison",
+    "Compare health factors across countries",
     "Scroll & Select Countries to Perform 0-1 Scaled Factor Comparison",
 ]
 
