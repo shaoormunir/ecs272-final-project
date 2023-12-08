@@ -1,3 +1,4 @@
 *.csv
 *.parquet
 !intro.parquet
+!index.csv
