@@ -19,7 +19,7 @@ glob_selected_country = None
 with open("data/exploration/newgeo.json") as response:
     countries = json.load(response)
 
-df = pd.read_csv("data/exploration/exploration.csv")
+df = pd.read_parquet("data/exploration/exploration.parquet")
 
 
 global_factor = "Hospital Beds per 1000"

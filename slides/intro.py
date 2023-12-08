@@ -17,7 +17,7 @@ import dash
 with open("data/intro/newgeo.json") as response:
     countries = json.load(response)
 
-df = pd.read_csv("data/intro/intro.csv")
+df = pd.read_parquet("data/intro/intro.parquet")
 
 global_start_date = df.date.min()
 global_end_date = df.date.max()

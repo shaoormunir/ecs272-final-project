@@ -17,7 +17,7 @@ def find_transitions(lst):
     return transitions
 
 
-df = pd.read_csv("data/government/gov.csv")
+df = pd.read_parquet("data/government/government.parquet")
 # df['date'] = df['date'].astype(str)
 df["date"] = pd.to_datetime(df["date"])
 df = df.sort_values(by="date")

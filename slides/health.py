@@ -8,7 +8,7 @@ import pandas as pd
 import dash_bootstrap_components as dbc
 import dash
 
-df = pd.read_csv("data/health/health-data.csv")
+df = pd.read_parquet("data/health/health.parquet")
 
 countries = sorted(df["country_name"].unique().tolist())
 # print(countries)

@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import pandas as pd
 
 # read mob.csv using pandas
-df = pd.read_csv("data/mobility/mob.csv")
+df = pd.read_parquet("data/mobility/mobility.parquet")
 
 # Extract year-month string as a new column from the date column
 df["year_month"] = df["date"].apply(lambda x: x[:7])
