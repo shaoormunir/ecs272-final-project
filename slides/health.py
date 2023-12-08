@@ -91,6 +91,14 @@ def get_updated_figure():
         x="country_name",
         y=epidemiological_factors[global_epidemiological_factor],
         size=health_factors[global_health_factor],
+        # add labels for the x and y axis
+        labels={
+            "country_name": "Country",
+            epidemiological_factors[
+                global_epidemiological_factor
+            ]: "Epidemiological Factor",
+            health_factors[global_health_factor]: "Health Factor",
+        },
         color="color",
         hover_name="country_name",
         hover_data={
@@ -108,6 +116,30 @@ def get_updated_figure():
             dbc.Row(
                 justify="center",
                 children=[
+                    dbc.Col(
+                        width=6,
+                        children=[
+                            dbc.DropdownMenu(
+                                label=global_health_factor,
+                                color="white",
+                                # size="lg",
+                                id="health-dropdown-health",
+                                style=dict(border="1px dotted #6c757d"),
+                                children=[
+                                    dbc.DropdownMenuItem(
+                                        health_factors,
+                                        id={
+                                            "type": "health_factor",
+                                            "index": i,
+                                        },
+                                    )
+                                    for i, health_factors in enumerate(
+                                        health_factors.keys()
+                                    )
+                                ],
+                            )
+                        ],
+                    ),
                     dbc.Col(
                         width=6,
                         children=[
@@ -133,27 +165,34 @@ def get_updated_figure():
                             )
                         ],
                     ),
+                ],
+            ),
+            dbc.Row(
+                justify="center",
+                children=[
                     dbc.Col(
                         width=6,
                         children=[
-                            dbc.DropdownMenu(
-                                label=global_health_factor,
-                                color="white",
-                                # size="lg",
-                                id="health-dropdown-health",
-                                style=dict(border="1px dotted #6c757d"),
-                                children=[
-                                    dbc.DropdownMenuItem(
-                                        health_factors,
-                                        id={
-                                            "type": "health_factor",
-                                            "index": i,
-                                        },
-                                    )
-                                    for i, health_factors in enumerate(
-                                        health_factors.keys()
-                                    )
-                                ],
+                            html.Div(
+                                style=dict(
+                                    textAlign="center",
+                                    marginTop="10px",
+                                    fontSize="15px",
+                                ),
+                                children="Represented as the circle size",
+                            )
+                        ],
+                    ),
+                    dbc.Col(
+                        width=6,
+                        children=[
+                            html.Div(
+                                style=dict(
+                                    textAlign="center",
+                                    marginTop="10px",
+                                    fontSize="15px",
+                                ),
+                                children="Represented by the y-axis",
                             )
                         ],
                     ),
@@ -242,7 +281,6 @@ def update_map(ep_factor, health_factor, selected_location):
 
     if type == "ep_factor":
         global_epidemiological_factor = list(epidemiological_factors.keys())[id]
-        print("Updated ep factor to: ", global_epidemiological_factor)
     elif type == "health_factor":
         global_health_factor = list(health_factors.keys())[id]
         print("Updated health factor to: ", global_health_factor)

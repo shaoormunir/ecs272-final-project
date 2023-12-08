@@ -55,7 +55,7 @@ def get_exploration_figure(
                 justify="right",
                 children=[
                     dbc.Col(
-                        width=6,
+                        width=5,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_factor,
@@ -72,8 +72,22 @@ def get_exploration_figure(
                             )
                         ],
                     ),
+                    # add a text box with the value "divided"
                     dbc.Col(
-                        width=6,
+                        width=2,
+                        children=[
+                            html.Div(
+                                style=dict(
+                                    textAlign="center",
+                                    marginTop="10px",
+                                    fontSize="20px",
+                                ),
+                                children="divided by",
+                            )
+                        ],
+                    ),
+                    dbc.Col(
+                        width=5,
                         children=[
                             dbc.DropdownMenu(
                                 label=global_ep_factor,

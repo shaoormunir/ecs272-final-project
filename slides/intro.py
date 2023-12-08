@@ -38,7 +38,7 @@ def get_main_figure(
                         children=[
                             get_stat_card(
                                 "Total Active Cases",
-                                "primary",
+                                "danger",
                                 total_active,
                             )
                         ]
@@ -47,7 +47,7 @@ def get_main_figure(
                         children=[
                             get_stat_card(
                                 "Total Deaths",
-                                "danger",
+                                "primary",
                                 total_deaths,
                             )
                         ]
