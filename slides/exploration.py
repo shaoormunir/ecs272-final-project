@@ -121,16 +121,45 @@ def get_exploration_figure(
 def get_updated_map(df, factor, ep_factor, selected_country):
     df_temp = df[["iso_3166_1_alpha_3", "country_name", factor, ep_factor]]
 
-    df_temp.loc[:, "ratio"] = df_temp[factor] / df_temp[ep_factor]
+    df_temp.loc[:, "ratio"] = df_temp[ep_factor] / df_temp[factor]
 
-    # print("Selected Country: ", glob_selected_country)
+    print("Selected Country: ", selected_country)
     # print(df_temp.country_name.unique())
 
     global_country_ratio = df_temp[df_temp["country_name"] == selected_country][
         "ratio"
     ].values[0]
 
-    # update ratio of other countries in reference to the selected country
+    print(
+        "Ep factor for selected country: ",
+        df_temp[df_temp["country_name"] == selected_country][ep_factor].values[0],
+    )
+
+    print(
+        "Factor for selected country: ",
+        df_temp[df_temp["country_name"] == selected_country][factor].values[0],
+    )
+
+    print("Ep factor is: ", ep_factor)
+    print("Factor is: ", factor)
+
+    print("Ratio for selected country: ", global_country_ratio)
+
+    # # update ratio of other countries in reference to the selected country
+    # df_temp.loc[:, "ratio"] = df_temp["ratio"] / global_country_ratio
+
+    # remove inf values
+    df_temp = df_temp.replace([float("inf"), float("-inf")], float("NaN"))
+
+    # remove outliers using the interquartile range
+    Q1 = df_temp["ratio"].quantile(0.25)
+    Q3 = df_temp["ratio"].quantile(0.75)
+    IQR = Q3 - Q1
+    df_temp = df_temp[
+        (df_temp["ratio"] >= Q1 - 1.5 * IQR) & (df_temp["ratio"] <= Q3 + 1.5 * IQR)
+    ]
+
+    # scale values relative to the selected country
     df_temp.loc[:, "ratio"] = df_temp["ratio"] / global_country_ratio
 
     fig = px.choropleth_mapbox(
@@ -139,7 +168,7 @@ def get_updated_map(df, factor, ep_factor, selected_country):
         locations="iso_3166_1_alpha_3",
         color="ratio",
         hover_name="country_name",
-        color_continuous_scale="Viridis",
+        color_continuous_scale="reds",
         range_color=(0, df_temp.ratio.max()),
         mapbox_style="open-street-map",
         zoom=1,
@@ -208,6 +237,10 @@ def update_map(factor, ep_factor, selected_location):
     ctx = dash.callback_context
     global global_factor
     global global_ep_factor
+    global glob_selected_country
+
+    if selected_location is None:
+        selected_location = glob_selected_country
 
     print("Factor: ", factor)
     print("EP Factor: ", ep_factor)
