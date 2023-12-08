@@ -49,7 +49,7 @@ def get_updated_figure():
         by=health_factors[global_health_factor], ascending=False
     ).head(10)
 
-    df_top_10["color"] = "top"
+    df_top_10["color"] = "Top 10"
 
     # print(df_top_10.country_name.unique().tolist())
     # select bottom 10 whose health factor is not null or 0
@@ -62,11 +62,11 @@ def get_updated_figure():
         .head(10)
     )
 
-    df_bottom_10["color"] = "bottom"
+    df_bottom_10["color"] = "Bottom 10"
 
     # print(df_bottom_10.country_name.unique().tolist())
 
-    df_selected_country["color"] = "selected"
+    df_selected_country["color"] = "Selected Country"
 
     df_combined = pd.concat([df_top_10, df_bottom_10, df_selected_country])
 
@@ -107,7 +107,11 @@ def get_updated_figure():
             health_factors[global_health_factor]: ":.2f",
         },
         size_max=60,
-        color_discrete_map={"top": "green", "bottom": "red", "selected": "blue"},
+        color_discrete_map={
+            "Top 10": "#943c92",
+            "Bottom 10": "#ff6bff",
+            "Selected Country": "black",
+        },
     )
 
     return dbc.Row(

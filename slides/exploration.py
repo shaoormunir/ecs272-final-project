@@ -112,7 +112,7 @@ def get_exploration_figure(
             dbc.Col(
                 width=12,
                 style=dict(
-                    height="80vh",
+                    # height="78vh",
                 ),
                 children=[
                     html.Div(
@@ -121,7 +121,7 @@ def get_exploration_figure(
                             dcc.Graph(
                                 figure=fig,
                                 id="exploration-world-map",
-                                style=dict(height="80vh", width="100%"),
+                                style=dict(height="78vh", width="100%"),
                                 config={"displayModeBar": False},
                             ),
                         ],

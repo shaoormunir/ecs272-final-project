@@ -28,10 +28,11 @@ def get_main_figure(
 ):
     return dbc.Row(
         children=[
+            # add text saying that country selected here will influence the story throughout the rest of the slideshow
             dbc.Col(
                 width=2,
                 style=dict(
-                    height="80vh",
+                    height="100%",
                 ),
                 children=[
                     dbc.Row(
@@ -75,7 +76,7 @@ def get_main_figure(
             dbc.Col(
                 width=8,
                 style=dict(
-                    height="80vh",
+                    # height="75vh",
                 ),
                 children=[
                     html.Div(
@@ -84,7 +85,7 @@ def get_main_figure(
                             dcc.Graph(
                                 figure=fig,
                                 id="world-map",
-                                style=dict(height="80vh", width="100%"),
+                                style=dict(height="75vh", width="100%"),
                                 config={"displayModeBar": False},
                             ),
                         ],
@@ -94,7 +95,7 @@ def get_main_figure(
             dbc.Col(
                 width=2,
                 style=dict(
-                    height="80vh",
+                    height="75vh",
                 ),
                 children=[
                     dbc.Button(
@@ -112,7 +113,7 @@ def get_main_figure(
                         "Regional Statistics",
                         "#8e9295",
                         top_10_countries,
-                        "73vh",
+                        "68vh",
                     ),
                 ],
             ),
@@ -120,7 +121,7 @@ def get_main_figure(
     )
 
 
-def get_stat_card(title, color, value, height="18vh"):
+def get_stat_card(title, color, value, height="16.5vh"):
     return dbc.Card(
         [
             dbc.CardHeader(
@@ -306,9 +307,22 @@ content = (
         children=[
             dbc.Container(
                 fluid=True,
-                style=dict(height="80vh"),
+                # style=dict(height="75vh"),
                 children=[
                     # content div
+                    html.Div(
+                        style=dict(
+                            width="100%",
+                            textAlign="center",
+                            fontSize="calc(0.5em + 0.5vw)",
+                            fontWeight="bold",
+                        ),
+                        children=[
+                            dash_dangerously_set_inner_html.DangerouslySetInnerHTML(
+                                f"Country selected will be used to customize the story throughout the rest of the slideshow."
+                            )
+                        ],
+                    ),
                     dbc.Row(
                         children=[
                             dbc.Col(
