@@ -120,12 +120,14 @@ def update_charts(selected_location, selected_epidemiology_data):
         y=df[df["country_name"] == selected_location]["mobility_residential"].tolist(),
         name="Residential Mobility",
         yaxis="y",
+        marker=dict(color="#9467bd"),
     )
     trace2 = go.Bar(
         x=yr_mnth,
         y=df[df["country_name"] == selected_location]["mobility_workplaces"].tolist(),
         name="Workplaces Mobility",
         yaxis="y",
+        marker=dict(color="#ff7f0e"),
     )
     trace3 = go.Bar(
         x=yr_mnth,
@@ -134,6 +136,7 @@ def update_charts(selected_location, selected_epidemiology_data):
         ].tolist(),
         name="Transit Stations Mobility",
         yaxis="y",
+        marker=dict(color="#8c564b"),
     )
     trace4 = go.Bar(
         x=yr_mnth,
@@ -142,24 +145,30 @@ def update_charts(selected_location, selected_epidemiology_data):
         ].tolist(),
         name="Grocery & Pharmacy Mobility",
         yaxis="y",
+        marker=dict(color="#e377c2"),
     )
     trace5 = go.Bar(
         x=yr_mnth,
         y=df[df["country_name"] == selected_location]["mobility_parks"].tolist(),
         name="Parks Mobility",
         yaxis="y",
+        marker=dict(color="#17becf"),
     )
 
     data_bar = [trace1, trace2, trace3, trace4, trace5]
 
     if selected_epidemiology_data == "total_active_cases":
         label = "Total Active Cases"
+        line_color = "#0d6efd"
     elif selected_epidemiology_data == "total_deaths":
         label = "Total Deaths"
+        line_color = "#dc3545"
     elif selected_epidemiology_data == "total_recoveries":
         label = "Total Recoveries"
+        line_color = "#198754"
     elif selected_epidemiology_data == "total_vaccinated":
         label = "Total Fully Vaccinated"
+        line_color = "#ffc008"
 
     # print(yr_mnth)
     # print(df[df["country_name"] == selected_location][selected_epidemiology_data].tolist())
@@ -171,7 +180,7 @@ def update_charts(selected_location, selected_epidemiology_data):
         ].tolist(),
         mode="lines",
         name=label,
-        line=dict(color="black"),
+        line=dict(color=line_color),
         yaxis="y2",
     )
 
