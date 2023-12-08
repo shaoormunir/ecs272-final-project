@@ -242,7 +242,9 @@ def update_map(ep_factor, health_factor, selected_location):
 
     if type == "ep_factor":
         global_epidemiological_factor = list(epidemiological_factors.keys())[id]
+        print("Updated ep factor to: ", global_epidemiological_factor)
     elif type == "health_factor":
         global_health_factor = list(health_factors.keys())[id]
+        print("Updated health factor to: ", global_health_factor)
 
     return get_updated_figure()
