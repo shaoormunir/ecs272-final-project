@@ -167,7 +167,7 @@ app.layout = html.Div(
                                             .tolist()
                                         )
                                     ],
-                                    value="United States of America",
+                                    value="India", # United States of America
                                     id="global-dropdown",
                                 ),
                             ],
