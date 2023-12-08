@@ -38,7 +38,7 @@ def get_main_figure(
                     dbc.Row(
                         children=[
                             get_stat_card(
-                                "Total Active Cases",
+                                "Total Confirmed Cases",
                                 "danger",
                                 total_active,
                             )
