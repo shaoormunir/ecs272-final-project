@@ -111,6 +111,7 @@ def filter_heatmap(user_selected_country):
             " ".join([word.capitalize() for word in str(ind_val).split("_")])
             .replace(" Usd", " (USD)")
             .replace(" Per 1000", " (Per 1000)")
+            .replace("Lt", " < ").replace("Gt", " >= ")
             + " "
         )
         final_index.append(new_val)
