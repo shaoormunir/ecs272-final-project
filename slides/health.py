@@ -49,7 +49,9 @@ def get_updated_figure():
         by=health_factors[global_health_factor], ascending=False
     ).head(10)
 
-    print(df_top_10.country_name.unique().tolist())
+    df_top_10["color"] = "top"
+
+    # print(df_top_10.country_name.unique().tolist())
     # select bottom 10 whose health factor is not null or 0
     df_bottom_10 = (
         df[
@@ -60,29 +62,44 @@ def get_updated_figure():
         .head(10)
     )
 
-    print(df_bottom_10.country_name.unique().tolist())
+    df_bottom_10["color"] = "bottom"
+
+    # print(df_bottom_10.country_name.unique().tolist())
+
+    df_selected_country["color"] = "selected"
 
     df_combined = pd.concat([df_top_10, df_bottom_10, df_selected_country])
 
-    print(df_combined.country_name.unique().tolist())
+    # scale the health factor using min-max scaling
+    # df_combined[health_factors[global_health_factor]] = (
+    #     df_combined[health_factors[global_health_factor]]
+    #     - df_combined[health_factors[global_health_factor]].min()
+    # ) / (
+    #     df_combined[health_factors[global_health_factor]].max()
+    #     - df_combined[health_factors[global_health_factor]].min()
+    # )
+
+    # print(df_combined.country_name.unique().tolist())
 
     # print(global_epidemiological_factor)
     # print(epidemiological_factors[global_epidemiological_factor])
+
+    # create a dot plot for the data where x-axis is the country name, y-axis is the epidemiological factor, and the size of the dot is the health factor
+
     fig = px.scatter(
         df_combined,
         x="country_name",
         y=epidemiological_factors[global_epidemiological_factor],
-        color="country_name",
-        hover_name="country_name",
         size=health_factors[global_health_factor],
-        trendline="ols",
-    )
-    fig.update_layout(
-        xaxis_title="",
-        yaxis_title=global_epidemiological_factor,
-        font=dict(size=12),
-        # hide legend
-        # xaxis_type="category",
+        color="color",
+        hover_name="country_name",
+        hover_data={
+            "country_name": False,
+            epidemiological_factors[global_epidemiological_factor]: ":.2f",
+            health_factors[global_health_factor]: ":.2f",
+        },
+        size_max=60,
+        color_discrete_map={"top": "green", "bottom": "red", "selected": "blue"},
     )
 
     return dbc.Row(
@@ -225,7 +242,9 @@ def update_map(ep_factor, health_factor, selected_location):
 
     if type == "ep_factor":
         global_epidemiological_factor = list(epidemiological_factors.keys())[id]
+        print("Updated ep factor to: ", global_epidemiological_factor)
     elif type == "health_factor":
         global_health_factor = list(health_factors.keys())[id]
+        print("Updated health factor to: ", global_health_factor)
 
     return get_updated_figure()
