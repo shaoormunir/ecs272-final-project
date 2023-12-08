@@ -1,117 +1,31 @@
-# dash-slides
+# ECS 272 Final Project
+## Analysis of factors affecting COVID-19 through interactive slideshow
 
-Make easy interactive presentation slides in Python with Dash. 
+This project is built using Python and Dash framework. To install the required libraries, run the following command:
 
-Example app at https://dash-slides.fly.dev/
+```python3 -m pip install -r requirements.txt```
 
-This is a Dash app with built in slide navigation, logo, web title, etc. Just run `python3 app.py` in a terminal to see it work!
+If you prefer to install it using a conda env, run the following command:
 
-## To use:
+```conda create --name <env_name> --file requirements.txt```
 
-```shell
-git clone https://github.com/russellromney/dash-slides
-cd dash-slides
-```
+Then activate the conda environment using:
 
-Using pip virtualenv:
+```conda activate <env_name>```
 
-```shell
-virtualenv env
-source env/bin/activate
-pip install -r requirements.txt
-python3 app.py
-```
+After installing the required libraries, run the project by:
 
-Or, my preferred way, using `poetry`:
+```python3 app.py```
 
-```shell
-poetry shell
-poetry install
-python3 app.py
-```
+or 
 
-![example gif](https://raw.githubusercontent.com/russellromney/dash-slides/master/example/assets/example_gif.gif)
+```flask run```
 
+This should show the localhost port number where the application is deployed, open the address shown on the localhost and the slideshow will open.
 
-**Making your own presentation**
+### Required data files
+The project repository by default includes all the data files required to run the application. If, for some reason, there is a need to regenerate the data files, navigate to the data folder, and then each subdirectory. First run the download.sh files using:
 
-1. Download, clone, or fork `dash-slides/`.
-1. Delete the example slides and add your own slides (individual Dash apps) in `slides/` as files with content and associated callbacks, with a filename like `<slide_name>.py`.
-   - Slide names must be valid Python variable names e.g. `example.py` or `_intro5.py` but not `my great slide.py` or `5 people.py`.
-   - Each slide's layout is stored in a variable named `content`, e.g. `content = html.Div...` (similar to multipage Dash app where each page has a `layout = html.Div...`
-   - Every slide needs `from app import app` at the beginning
-3. Configure the presentation in  `presentation.py`:
-   - List your slides' names in order (without the `.py`) in `slide_order`
-   - e.g. `slide_order = ['intro','template','last_slide','end']`
-2. Store custom functions, utilities, objects, etc. in `custom_utilities/` or however else you'd like.
-4. `pip install dash dash-bootstrap-components`
-   - the navigation depends on it
+```chmod +x download.sh && ./download.sh```
 
-Then run it like a normal Dash app with `python app.py` or using Gunicorn or whatever else you'd normally use with Dash or Flask.
-
-For the curious, there's a Dockerfile included to run this with `gunicorn` workers.
-
-How this would look:
-```
-# files structure
-/dash-slides
-   /assets
-   /slides
-      intro.py
-      body1.py
-      body2.py
-      conclusion.py
-   index.py
-   app.py
-   presentation.py
-
-# in /slides/presentation.py
-slide_order = [
-    'intro',
-    'body1',
-    'body2',
-    'conclusion'
-]
-...
-```
-
----
-
-## More custom stuff
-
-**Logo:** Replace `assets/logo.png` with your own file named `logo.png` for your logo to appear on all slides.
-
-**Favicon:** Like a normal Dash app, replace `assets/favicon.ico` with your own favicon for an even more custom experience.
-
-**Title:** Give your presentation a title by changing `presentation_title`.
-
-**Custom navigation text:** Replace `prev_text` and `next_text` values with new words to have any navigation text you want.
-
-
-
----
-
-## Free deployment on [fly.io](https://fly.io)
-
-You can deploy to free to https://fly.io with automatic HTTPS and a URL!
-
-I've included a `Dockerfile` for you - just install flyctl (https://fly.io/docs/hands-on/install-flyctl/) and create a free account, then do:
-
-```shell
-fly launch
-```
-
-It will prompt you for an app name and a region and create a `fly.toml` file; your app will then be available at https://app-name.fly.dev.
-
-If you don't deploy immediately, or to redeploy after changes do:
-
-```shell
-fly deploy
-```
-
-again.
----
-
-Made with :heart: by Russell Romney in Madison, WI and NYC.
-
-> Shoutout to Tom Begley's excellent `dash-bootstrap-components` package, used here to make prettify navigation.
+Then run the analysis.ipynb notebooks in each directory.
